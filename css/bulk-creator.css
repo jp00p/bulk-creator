@@ -1,0 +1,106 @@
+.page-list, .add-page {
+    display:inline-block;
+    width:45%;
+    height:auto;
+    overflow:hidden;
+    margin:0 25px 0 0;
+    float:left;
+}
+
+.postbox .wrap {
+    padding:15px;
+    overflow: hidden;
+}
+
+.postbox h3 {
+    cursor: auto !important;
+}
+
+#poststuff {
+    padding:0px;
+}
+
+
+
+
+
+
+.post-types {
+    margin:15px 0;
+}
+
+    .post-types a.button {
+        display:inline-block;
+        margin-right:5px;
+    }
+
+    
+.add-page label, .add-page input, .add-page textarea, .add-page select {
+    display:block;
+    margin:0 0 15px 0;
+}
+
+    .titles, .d-content, #page_id {
+        width:100%;
+        padding:5px;
+    }
+    
+    .add-page textarea, .add-page select {
+        margin:5px 0;
+    }
+    
+    #page_id {
+        height: 30px;
+    }
+    
+    .d-content {
+        height:120px;
+    }
+    
+    .add-page label span {
+        color:#b3b3b3;
+    }    
+    
+    .add-page label strong {
+        font-size:13px;
+    }
+
+    .update-site, .add-posts-button {
+        display: inline-block;
+        float: right;
+        margin: 0;
+    }
+    
+    .update-site {
+        visibility: hidden;
+    }
+    
+    
+    
+    
+
+.page-list ul {
+    margin:0;
+}
+
+.page-list li {
+    margin:5px 15px 5px 15px;
+}
+
+.page-list li {
+    list-style:disc;
+}
+
+.page-list li li {
+    list-style:circle;
+}
+
+.postbox > h3 {
+    padding:15px;
+}
+
+.wpblue { 
+    color:#21759B; 
+}
+
+
