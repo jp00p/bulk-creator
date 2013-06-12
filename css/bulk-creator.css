@@ -104,3 +104,17 @@
 }
 
 
+
+
+
+.term-list label, .term-list input {
+    display: inline-block;
+}
+
+.term-list label {
+    margin: 0 15px 0 0;
+}
+
+.term-list input {
+    margin: 0 5px 0 0;
+}

@@ -121,14 +121,13 @@ function bulk_creator() {
 	        
 	            if( isset($_POST['pages-list']) && $_POST['pages-list'] != '' ){
 	                 
-                	//form submitted
-                	if(preg_match_all('/(\d+\|(-|new)?\d+\|[^\n]*)/',$_POST['pages-list'],$match_pg)){
+                	if(preg_match_all('/(\d+\|(-|new)?\d+\|[^\n]*)/',$_POST['pages-list'],$match_page)){
                 	
                 		$newpage = array();
                 		
-                		foreach($match_pg[0] as $pg_res){
+                		foreach($match_page[0] as $page_result){
                 		
-                			if(preg_match('/((\d+)\|((-|new)?\d+)\|(.*))/',$pg_res,$rres)){
+                			if(preg_match('/((\d+)\|((-|new)?\d+)\|(.*))/',$page_result,$rres)){
                 			
                 				$parent = -1;
                 				
@@ -177,7 +176,8 @@ function bulk_creator() {
                 					'post_status' => 'publish',
                 					'post_parent' => $parent,
                 					'post_title' => rtrim($rres[5]),
-                					'post_content' => $pcontent);
+                					'post_content' => $pcontent
+                				);
                 				
                 				global $wpdb;
                 				
@@ -186,6 +186,27 @@ function bulk_creator() {
                 				$wpdb->flush();
                 				
                 				$newpage[$rres[2]] = wp_insert_post($params);
+                				
+                				//form submitted
+                				$tax_query = array();
+                				
+                				if(count($_POST["taxonomy"]) > 0) {
+                				
+                    				foreach($_POST["taxonomy"] as $taxx) {
+                    				
+                    				    $this_cat = explode("|", $taxx);
+                    				    
+                                        wp_set_object_terms($newpage[$rres[2]], $this_cat[1], $this_cat[0], true);
+                    				    
+                    				    //$tax_query[$this_cat[0]][] = $this_cat[1];
+                    				    
+                    				}
+                    			
+                    			}
+                				
+                				
+                				
+                				
                 			}
                 		} 
                 		
@@ -199,15 +220,20 @@ function bulk_creator() {
 	        
 	            $type = get_post_type_object($_GET["post_type"]);
 	        
-	        ?>
 	        
-	        <?php if(isset($_GET["saved"])) { ?>
 	        
+	        if(isset($_GET["saved"])) { ?>
+	        
+	            
 	            <div id="message" class="updated below-h2">
+	            
 	                <p><?php echo $type->labels->name; ?> Added!</p>
+	                
 	            </div>
+	            
 	        
 	        <?php } ?>
+	        
 	        
 	        <div id="poststuff">
 	        
@@ -246,7 +272,37 @@ function bulk_creator() {
                                 <textarea name="d-content" id="d-content" class="d-content"></textarea>
                                 <span>Enter default content here.  Merge tags include: <abbr title="Inserts the page title wrapped in an h2">[pagetitle]</abbr>, <abbr title="Inserts a variety of dummy content">[lipsum]</abbr></span>
                             </label>
+
                             
+                            <div class="term-list">
+                                <?php 
+                                
+                                    $tax = get_object_taxonomies($_GET['post_type']); 
+                                    
+                                    foreach($tax as $tax_name) {
+                                    
+                                        if(is_taxonomy_hierarchical($tax_name)) {
+                                    
+                                            echo '<h4>' . ucwords(str_replace(array("_", "-"), " ", $tax_name)) . '</h4>';
+                                        
+                                            $t_args = array(
+                                                "hide_empty" => false
+                                            );  
+                                            
+                                            $terms = get_terms($tax_name, $t_args);
+                                            
+                                            foreach($terms as $term) {
+                                            
+                                                echo '<label><input type="checkbox" name="taxonomy[]" value="'.$tax_name.'|'.$term->slug.'">' . $term->name . '</label>';
+                                            
+                                            }
+                                            
+                                        }
+                                    
+                                    }
+                                
+                                ?>
+                            </div>
                             
                             
                             <textarea id="pages-list" name="pages-list" style="display:none;"></textarea>
@@ -273,7 +329,8 @@ function bulk_creator() {
                                         'title_li' => '',
                                         'post_status' => 'publish,draft',
                                         'echo' => 0,
-                                        'post_type' => $_GET['post_type']
+                                        'post_type' => $_GET['post_type'],
+                                        'posts_per_page' => -1
                                     
                                     );
                                         	                    
@@ -287,7 +344,8 @@ function bulk_creator() {
                                     $args = array(
                                         'post_status' => 'publish,draft',
                                         'post_type' => $_GET['post_type'],
-                                        'hierarchical' => '0'
+                                        'hierarchical' => '0',
+                                        'posts_per_page' => -1
                                     );
                                     
                                 	$post_list = get_posts($args);
