@@ -2,11 +2,12 @@
 /*
 Plugin Name: Bulk Creator
 Plugin URI: http://capnjeremy.com
-Description: Allows bulk creation of posts, pages, and custom post types.
+Description: Quickly create a mass amount of posts, pages, or custom post types.  You can apply default content, hierarchy and taxonomies to the posts you create.
 Version: 1.0
 Author: Jeremy Wilson
 Author URI: http://capnjeremy.com
-License: WTFPL
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 
@@ -35,10 +36,8 @@ function add_bp_pages(){
 function bulk_creator() {
 
 
-
     /* TODO
     
-        -- Taxonomies
         -- Post Meta? Maybe pull in from ACF?
     
     */
@@ -50,6 +49,8 @@ function bulk_creator() {
     
     }
     
+
+
     // these are the default post types that are supported
     $allowed_types = array(
     
@@ -323,6 +324,8 @@ function bulk_creator() {
                             <ul>
                             <?php
                                 
+
+                                // is the post type hierarchical?
                                 if(is_post_type_hierarchical( $_GET['post_type'] )) {
                                     
                                     $args = array(
@@ -371,7 +374,7 @@ function bulk_creator() {
                     </div><!-- page-list -->
                     
                     
-                    </form>
+                </form>
                 
                 
 	        </div><!-- poststuff -->

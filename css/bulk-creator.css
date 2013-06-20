@@ -20,11 +20,6 @@
     padding:0px;
 }
 
-
-
-
-
-
 .post-types {
     margin:15px 0;
 }
@@ -34,7 +29,6 @@
         margin-right:5px;
     }
 
-    
 .add-page label, .add-page input, .add-page textarea, .add-page select {
     display:block;
     margin:0 0 15px 0;
@@ -75,10 +69,6 @@
         visibility: hidden;
     }
     
-    
-    
-    
-
 .page-list ul {
     margin:0;
 }
@@ -102,10 +92,6 @@
 .wpblue { 
     color:#21759B; 
 }
-
-
-
-
 
 .term-list label, .term-list input {
     display: inline-block;
